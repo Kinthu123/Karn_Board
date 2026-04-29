@@ -51,4 +51,11 @@
     );
     pointer-events: none;
   }
+  .dot-grid {
+    background-image: radial-gradient(circle, rgba(45, 55, 72, 0.55) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .glow-yellow {
+    text-shadow: 0 0 18px rgba(246, 224, 94, 0.6), 0 0 36px rgba(246, 224, 94, 0.22);
+  }
 }
