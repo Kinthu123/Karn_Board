@@ -74,6 +74,18 @@ function OtpInput({ onChange, resetCount }) {
   )
 }
 
+// ── Error message helper ───────────────────────────────────────────
+function isRateLimit(err) {
+  const msg = (err?.message ?? '').toLowerCase()
+  return msg.includes('rate limit') || msg.includes('too many') || msg.includes('over_email')
+}
+
+function friendlyMsg(err) {
+  if (isRateLimit(err)) return 'Email limit reached. Wait a few minutes, then try again.'
+  if ((err?.message ?? '').toLowerCase().includes('invalid')) return 'Invalid code. Check your email and try again.'
+  return err?.message ?? 'Something went wrong.'
+}
+
 // ── Auth screen ────────────────────────────────────────────────────
 export default function AuthScreen({ onAuth }) {
   const [mode, setMode]         = useState('signin')
@@ -115,7 +127,8 @@ export default function AuthScreen({ onAuth }) {
         onAuth(data.user)
       }
     } catch (err) {
-      setError(err.message ?? 'Something went wrong.')
+      if (isRateLimit(err)) setCooldown(300)
+      setError(friendlyMsg(err))
     } finally {
       setLoading(false)
     }
@@ -135,7 +148,7 @@ export default function AuthScreen({ onAuth }) {
       if (error) throw error
       onAuth(data.user)
     } catch (err) {
-      setError(err.message ?? 'Invalid code. Please try again.')
+      setError(friendlyMsg(err))
       setOtp('')
       setOtpReset(r => r + 1)
     } finally {
@@ -151,7 +164,8 @@ export default function AuthScreen({ onAuth }) {
       if (error) throw error
       setCooldown(60)
     } catch (err) {
-      setError(err.message ?? 'Could not resend code.')
+      if (isRateLimit(err)) setCooldown(300)
+      setError(friendlyMsg(err))
     }
   }
 
@@ -195,7 +209,10 @@ export default function AuthScreen({ onAuth }) {
           </form>
 
           <p className="font-sans text-border text-xs text-center leading-relaxed">
-            Check spam if you don't see it. The code expires in 1 hour.
+            Check your spam folder. Code expires in 1 hour.{' '}
+            {cooldown >= 60 && (
+              <span className="text-yellow/60">Resend available in {Math.ceil(cooldown / 60)}m.</span>
+            )}
           </p>
 
           {/* Footer */}
@@ -211,7 +228,10 @@ export default function AuthScreen({ onAuth }) {
               disabled={cooldown > 0}
               className="font-pixel text-[7px] text-muted hover:text-yellow transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {cooldown > 0 ? `RESEND (${cooldown}s)` : 'RESEND CODE'}
+              {cooldown > 0
+                ? `RESEND (${cooldown >= 60 ? `${Math.ceil(cooldown / 60)}m` : `${cooldown}s`})`
+                : 'RESEND CODE'
+              }
             </button>
           </div>
         </div>
