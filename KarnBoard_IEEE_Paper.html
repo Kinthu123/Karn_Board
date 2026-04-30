@@ -180,19 +180,19 @@
   <div class="paper-title">
     <h1>KarnBoard: A Gamified Kanban Web Application<br>with Pixel-Art UI for Team Project Management</h1>
     <div class="authors">Thu Rein Htet</div>
-    <div class="affil">Digital Innovation Technology</div>
-    <div class="email">thurein.h66@rsu.ac.th</div>
+    <div class="affil">Department of Computer Science and Engineering</div>
+    <div class="email">icedevil196@gmail.com</div>
   </div>
 
   <!-- ══ ABSTRACT ══ -->
   <div class="abstract-box full-width">
     <span class="label">Abstract—</span>
     <p>
-      This paper presents KarnBoard, a browser-based gamified Kanban project management web application designed to address the widespread problem of low user engagement with conventional project management tools. KarnBoard integrates gamification mechanics—including experience points (XP), level progression, and streak tracking—into a Kanban-style task board, providing immediate positive reinforcement for task completion. The system is implemented as a client-side single-page application (SPA) using React, Vite, and Tailwind CSS, with data persisted in the browser's localStorage, enabling instant use without account registration or backend infrastructure. A distinctive pixel-art aesthetic, inspired by 8-bit game interfaces, creates a visually engaging experience that differentiates KarnBoard from corporate PM tools. Multi-project support allows users to maintain separate workspaces, each with independent task boards, team chat, moodboards, activity feeds, and phase tracking. Usability evaluation with five participants yielded a mean System Usability Scale (SUS) score of 77.5, indicating good usability above the industry average of 68. The paper discusses the design rationale, system architecture, gamification model, and UX/UI principles, along with identified limitations and directions for future work.
+      This paper presents KarnBoard, a browser-based gamified Kanban project management web application designed to address the widespread problem of low user engagement with conventional project management tools. KarnBoard integrates gamification mechanics—including experience points (XP), level progression, and streak tracking—into a Kanban-style task board, providing immediate positive reinforcement for task completion. The system is implemented as a React 19 single-page application (SPA) bundled with Vite 8 and styled with Tailwind CSS v3, with cloud-based data persistence and authentication powered by Supabase, supporting secure account registration, OTP email verification, and personalised user profiles. A distinctive pixel-art aesthetic, inspired by 8-bit game interfaces, creates a visually engaging experience that differentiates KarnBoard from corporate PM tools. Multi-project support allows users to maintain separate workspaces, each with independent task boards, team chat, moodboards, activity feeds, and phase tracking. Usability evaluation with five participants yielded a mean System Usability Scale (SUS) score of 77.5, indicating good usability above the industry average of 68. The paper discusses the design rationale, system architecture, gamification model, and UX/UI principles, along with identified limitations and directions for future work.
     </p>
   </div>
   <div class="keywords full-width">
-    <span>Keywords—</span>gamification; Kanban; project management; web application; single-page application; user experience; pixel art; local-first software; XP system; usability
+    <span>Keywords—</span>gamification; Kanban; project management; web application; single-page application; user experience; pixel art; cloud authentication; OTP verification; Supabase; XP system; usability
   </div>
 
   <hr class="full-width">
@@ -213,14 +213,14 @@
       Gamification—defined by Deterding et al. as "the use of game design elements in non-game contexts" [3]—has demonstrated effectiveness in increasing user engagement across education, fitness, and commerce applications. The Kanban method, originating from Toyota's lean manufacturing principles and adopted into software development [4], provides a visual workflow model that maps naturally onto gamification reward structures: completing a task (moving it to DONE) becomes an explicit, rewarded event rather than a passive state change.
     </p>
     <p>
-      Local-first software [5] offers an architectural approach where the primary data store resides on the client device, eliminating friction of account creation and enabling immediate, zero-latency interaction. This approach is particularly suitable for prototyping and student projects where backend infrastructure may not be available.
+      Cloud-backed architectures, when paired with low-friction authentication flows, can preserve rapid onboarding while enabling cross-device data persistence. Supabase—an open-source Firebase alternative built on PostgreSQL—provides managed authentication, row-level security, and real-time database capabilities within a serverless model, reducing infrastructure burden while supporting scalable cloud storage [5]. KarnBoard leverages this stack to offer secure account creation with OTP email verification and persistent cloud storage, removing the need for teams to operate their own backend infrastructure.
     </p>
 
     <h3 class="alpha" data-letter="C">Objectives</h3>
     <p>The objectives of this work are:</p>
     <p>1) To design and implement a Kanban-based PM web application with integrated gamification mechanics (XP, levels, streaks, activity feed).</p>
     <p>2) To create a distinctive pixel-art UI/UX system that applies game interface conventions to productivity software.</p>
-    <p>3) To support multi-project workspaces with team collaboration features within a local-first browser architecture.</p>
+    <p>3) To support multi-project workspaces with team collaboration features backed by a cloud database with per-user authentication and secure data isolation.</p>
     <p>4) To evaluate the system's usability with real users using the System Usability Scale.</p>
 
     <!-- ─── II. RELATED WORKS ─── -->
@@ -244,7 +244,7 @@
 
     <h3 class="alpha" data-letter="C">Local-First and Client-Side Architecture</h3>
     <p>
-      Kleppmann et al. [5] introduced the local-first software paradigm, arguing that applications should prioritize local data ownership while supporting optional sync. Their principles—fast, offline-capable, owned data—directly shaped KarnBoard's localStorage-first architecture. The authors note that local-first applications offer superior responsiveness and privacy, at the cost of cross-device sync complexity.
+      Kleppmann et al. [5] introduced the local-first software paradigm, arguing that applications should prioritize local data ownership while supporting optional sync. While KarnBoard's initial prototype followed this model, the production architecture evolved toward a cloud-backed approach—using Supabase's PostgreSQL database and row-level security policies—to enable persistent cross-device access, which is critical for team-based project management. This transition reflects the trade-off Kleppmann et al. identified: local-first offers superior offline responsiveness, whereas cloud-backed architectures enable real-time data portability and multi-user access.
     </p>
 
     <h3 class="alpha" data-letter="D">UX Design and Usability</h3>
@@ -265,7 +265,7 @@
 
     <h3 class="alpha" data-letter="F">Research Gap</h3>
     <p>
-      While prior work demonstrates gamification's effectiveness in education [14], fitness [6], and enterprise knowledge platforms [8], few systems apply gamification specifically to Kanban-based project management with a local-first, registration-free web architecture. Existing tools such as Trello, Jira, and Notion provide Kanban functionality but offer no intrinsic motivation mechanisms. KarnBoard addresses this gap by combining XP progression, streak tracking, and team activity feeds within a purely client-side SPA deployable without infrastructure.
+      While prior work demonstrates gamification's effectiveness in education [14], fitness [6], and enterprise knowledge platforms [8], few systems apply gamification specifically to Kanban-based project management within a lightweight cloud-backed web architecture. Existing tools such as Trello, Jira, and Notion provide Kanban functionality but offer no intrinsic motivation mechanisms. KarnBoard addresses this gap by combining XP progression, streak tracking, and team activity feeds within a React SPA backed by Supabase authentication and cloud storage, while maintaining low-friction onboarding through a streamlined sign-up and OTP email confirmation flow.
     </p>
 
     <!-- ─── III. METHODOLOGY ─── -->
@@ -273,10 +273,13 @@
 
     <h3 class="alpha" data-letter="A">System Architecture</h3>
     <p>
-      KarnBoard is implemented as a React 18 SPA bundled with Vite 8 and styled with Tailwind CSS v3. The application runs entirely in the browser; there is no server-side component or network requirement after initial page load. All application state is persisted using the Web Storage API (localStorage), with automatic migration support for users upgrading from a single-board to multi-board data format.
+      KarnBoard is implemented as a React 19 SPA bundled with Vite 8 and styled with Tailwind CSS v3. The application uses Supabase as its backend-as-a-service layer, providing PostgreSQL database storage, JWT-based authentication, and row-level security (RLS) policies that enforce per-user data isolation at the database level without application-layer guard code.
     </p>
     <p>
-      The data model centers on a <em>boards</em> array, where each board object contains: <em>tasks[]</em>, <em>members[]</em>, <em>activity[]</em>, <em>messages[]</em>, <em>moodboard[]</em>, and scalar fields for XP, streak, phase, and description. The active board is tracked by ID in a separate localStorage key and mirrored to a React ref to prevent stale closure issues in memoized callbacks.
+      The data model is normalised across seven PostgreSQL tables: <em>profiles</em>, <em>boards</em>, <em>tasks</em>, <em>board_members</em>, <em>messages</em>, <em>activity_log</em>, and <em>moodboard_items</em>. Each table carries a <em>board_id</em> foreign key and is protected by an RLS policy requiring <code>auth.uid() = owner_id</code>. The active board ID is stored in React state and mirrored to a ref to prevent stale closure issues in memoised callbacks; board data is debounce-synced to Supabase 800 ms after any mutation to minimise write volume.
+    </p>
+    <p>
+      The onboarding flow proceeds through four sequential screens: (1) <em>LoadingScreen</em>—a boot-sequence animation that checks for an active Supabase session; (2) <em>AuthScreen</em>—email/password sign-in or registration with a 6-digit OTP email confirmation step verified via <code>supabase.auth.verifyOtp()</code>; (3) <em>ProfileSetupScreen</em>—collection of display name, avatar colour, and skill tags persisted to the <em>profiles</em> table; and (4) <em>CreateBoardScreen</em>—named board initialisation before entering the main workspace. Returning authenticated users bypass steps 2–4 and are delivered directly to their dashboard.
     </p>
     <p>
       Drag-and-drop Kanban interaction is implemented using the @dnd-kit/core and @dnd-kit/sortable libraries, which provide pointer and keyboard accessible drag semantics with collision detection algorithms.
@@ -421,7 +424,9 @@
         <tr><td>Kanban Board</td><td>✓</td><td>✓</td><td>✓</td></tr>
         <tr><td>XP / Gamification</td><td>✗</td><td>✗</td><td>✓</td></tr>
         <tr><td>Streak Tracking</td><td>✗</td><td>✗</td><td>✓</td></tr>
-        <tr><td>No Login Required</td><td>✗</td><td>✗</td><td>✓</td></tr>
+        <tr><td>Cloud Data Persistence</td><td>✓</td><td>✓</td><td>✓</td></tr>
+        <tr><td>OTP Email Verification</td><td>✗</td><td>✗</td><td>✓</td></tr>
+        <tr><td>User Profile &amp; Skills</td><td>✗</td><td>✓</td><td>✓</td></tr>
         <tr><td>Pixel Art UI</td><td>✗</td><td>✗</td><td>✓</td></tr>
         <tr><td>Activity Feed</td><td>✗</td><td>✓</td><td>✓</td></tr>
         <tr><td>Multi-Project</td><td>✓</td><td>✓</td><td>✓</td></tr>
@@ -455,17 +460,17 @@
     <p>This work makes the following contributions:</p>
     <p>1) A priority-weighted XP gamification model for Kanban task management.</p>
     <p>2) A pixel-art UI design system with semantic color tokens applicable to productivity software.</p>
-    <p>3) A local-first multi-project architecture with automatic single-to-multi-board data migration.</p>
+    <p>3) A cloud-backed multi-project architecture using Supabase PostgreSQL with row-level security policies for per-user data isolation and a structured four-stage onboarding flow with OTP email verification.</p>
     <p>4) Usability evidence supporting the integration of game mechanics into PM tools for student and small-team contexts.</p>
 
     <h3 class="alpha" data-letter="C">Limitations</h3>
     <p>
-      The current implementation has several limitations. Real-time multi-user synchronization is not supported; data exists only on the local device. The localStorage API imposes an approximate 5 MB storage limit. The mobile drag-and-drop experience requires improvement. The SUS evaluation involved a small sample (n=5), limiting statistical generalizability.
+      The current implementation has several limitations. Real-time collaborative editing—where multiple users simultaneously modify the same board—is not supported; each board is owned by a single authenticated user. The OTP email confirmation step depends on Supabase's email delivery infrastructure and an active internet connection, introducing a registration step not present in an offline-first design. The mobile drag-and-drop experience requires improvement. The SUS evaluation involved a small sample (n=5), limiting statistical generalizability.
     </p>
 
     <h3 class="alpha" data-letter="D">Future Work</h3>
     <p>
-      Planned future work includes: (1) a backend API with WebSocket support for real-time multi-device sync; (2) a longitudinal user study measuring productivity impact over a 4-week period; (3) a mobile-native tap-to-move fallback for Kanban columns on touch devices; (4) project rename functionality and sprint/milestone grouping; (5) AI-assisted task suggestion based on project phase and team skills.
+      Planned future work includes: (1) real-time collaborative board editing using Supabase Realtime channels to support concurrent multi-user access on shared boards; (2) a longitudinal user study measuring productivity impact over a 4-week period; (3) a mobile-native tap-to-move fallback for Kanban columns on touch devices; (4) sprint/milestone grouping and board archiving; (5) AI-assisted task suggestion based on project phase and team skill tags.
     </p>
 
     <!-- ─── REFERENCES ─── -->
